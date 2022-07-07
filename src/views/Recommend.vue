@@ -1,10 +1,10 @@
 <template>
   <div class="bs__wrapper" ref="wrapper">
-    <ul class="bs__content" v-if="sliderItems.length">
-      <li class="bs__item" v-for="(item, index) in sliderItems" :key="item.id">
+    <div class="bs__content" v-if="sliderItems.length">
+      <div class="bs__item" v-for="(item, index) in sliderItems" :key="item.id">
         <img :src="item.pic" alt="" srcset="" />
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -49,16 +49,19 @@ export default defineComponent({
   padding-top: 40%;
   overflow: hidden;
   position: relative;
+  height: 0;
   .bs__content {
     position: absolute;
-    display: flex;
     top: 0;
     left: 0;
     height: 100%;
+    display: flex;
     .bs__item {
+      width: 100vw;
       height: 100%;
       img {
         height: 100%;
+        width: 100%;
       }
     }
   }
