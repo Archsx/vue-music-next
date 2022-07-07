@@ -1,39 +1,66 @@
-<template></template>
+<template>
+  <div class="bs__wrapper" ref="wrapper">
+    <ul class="bs__content" v-if="sliderItems.length">
+      <li class="bs__item" v-for="(item, index) in sliderItems" :key="item.id">
+        <img :src="item.pic" alt="" srcset="" />
+      </li>
+    </ul>
+  </div>
+</template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, nextTick, ref, Ref } from 'vue'
+import BScroll from '@better-scroll/core'
 import { getRecommend } from '@/service/recommend'
-
-interface ISliderItem {
-  id: string
-  pic: string
-  link: string
-}
-
-interface IAlbumItem {
-  id: number
-  title: string
-  pic: string
-  username: string
-}
-
-export type GetRecommendResponse = [
-  albums: Array<IAlbumItem>,
-  sliders: Array<ISliderItem>
-]
+import Slide from '@better-scroll/slide'
+import { GetRecommendResponse, ISliderItem } from '@/types'
+BScroll.use(Slide)
 
 export default defineComponent({
   name: '',
   components: {},
-  setup(props) {
+  setup(props, { slots, emit, attrs }) {
+    let sliderItems: Ref<Array<ISliderItem>> = ref([])
+    const wrapper: Ref<null | HTMLDivElement> = ref(null)
     getRecommend<GetRecommendResponse>()
       .then((res) => {
-        const [albums, sliders] = res
+        sliderItems.value = res.sliders
+        nextTick(() => {
+          const bscrollInstance = new BScroll(wrapper.value!, {
+            scrollX: true,
+          })
+        })
       })
-      .catch((err) => {})
-    return {}
+      .catch((err) => {
+        console.log(err)
+        //
+      })
+    return {
+      sliderItems,
+      wrapper,
+    }
   },
 })
 </script>
 
-<style lang="" scoped></style>
+<style lang="scss" scoped>
+.bs__wrapper {
+  width: 100%;
+  padding-top: 40%;
+  overflow: hidden;
+  position: relative;
+  .bs__content {
+    position: absolute;
+    display: flex;
+    top: 0;
+    left: 0;
+    height: 100%;
+    .bs__item {
+      height: 100%;
+      img {
+        height: 100%;
+      }
+    }
+  }
+}
+</style>
