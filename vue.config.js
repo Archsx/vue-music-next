@@ -12,4 +12,8 @@ module.exports = {
       registerRouter(app)
     },
   },
+  productionSourceMap: false,
+  configureWebpack: {
+    devtool: 'source-map',
+  },
 }
