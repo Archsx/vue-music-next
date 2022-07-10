@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="slider__wrapper">
-      <slider :sliderItems="sliderItems"></slider>
+      <slider :sliderItems="sliderItems" v-if="sliderItems.length"></slider>
     </div>
   </div>
 </template>
