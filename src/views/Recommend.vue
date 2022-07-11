@@ -16,7 +16,7 @@
             <ul class="item__wrapper">
               <li v-for="(item, index) in albumItems" class="item">
                 <div class="icon">
-                  <img :src="item.pic" alt="" srcset="" />
+                  <img v-lazy="item.pic" alt="" srcset="" />
                 </div>
                 <div class="description">
                   <h2 class="name">{{ item.username }}</h2>
