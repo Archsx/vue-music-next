@@ -1,8 +1,6 @@
 <template>
   <div class="scroll__wrapper" ref="wrapper">
-    <div class="scroll__content">
-      <slot></slot>
-    </div>
+    <slot></slot>
   </div>
 </template>
 
@@ -12,10 +10,16 @@ import { useScroll } from './useScroll'
 
 export default defineComponent({
   name: 'Scroll',
+  props: {
+    click: {
+      type: Boolean,
+      default: true,
+    },
+  },
   components: {},
   setup(props) {
     const wrapper: Ref<HTMLDivElement | null> = ref(null)
-    const scrollInstance = useScroll(wrapper)
+    const scrollInstance = useScroll(wrapper, props)
     return {
       wrapper,
     }
@@ -25,7 +29,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .scroll__wrapper {
-  width: 100%;
+  // width: 100%;
   height: 100%;
 }
 </style>
