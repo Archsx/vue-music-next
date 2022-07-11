@@ -19,6 +19,7 @@ interface useSliderReturnVal {
 export function useSlider(
   wrapper: Ref<HTMLElement | null>
 ): useSliderReturnVal {
+  // 其实这里我还不知道为什么要用ref去包裹slider
   const slider: Ref<null | BScrollConstructor<{}>> = ref(null)
   const currentPageIndex = ref(0)
   onMounted(() => {
@@ -40,9 +41,7 @@ export function useSlider(
     }
   })
   onUnmounted(() => {
-    if (slider.value) {
-      slider.value.destroy()
-    }
+    slider.value?.destroy()
   })
   return {
     slider,
