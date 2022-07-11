@@ -30,6 +30,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .scroll__wrapper {
   // width: 100%;
-  height: 100%;
+  // height: 100%;
 }
 </style>
