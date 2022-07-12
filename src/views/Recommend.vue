@@ -1,6 +1,6 @@
 <template>
-  <div class="recommend">
-    <scroll class="recommend-content">
+  <div class="recommend" v-loading="isLoading">
+    <scroll class="recommend-content" v-if="!isLoading">
       <div>
         <div class="wrapper">
           <div class="slider__wrapper">
@@ -11,7 +11,7 @@
           </div>
         </div>
         <div class="recommend__list">
-          <h1 class="list__title">热门歌单推荐</h1>
+          <h1 class="list__title">{{ listTitle }}</h1>
           <div class="scroll__container">
             <ul class="item__wrapper">
               <li v-for="(item, index) in albumItems" class="item">
@@ -46,6 +46,8 @@ export default defineComponent({
   setup(props, { slots, emit, attrs }) {
     let sliderItems: Ref<Array<ISliderItem>> = ref([])
     let albumItems: Ref<Array<IAlbumItem>> = ref([])
+    const listTitle = ref('')
+    const isLoading = ref(true)
     getRecommend<GetRecommendResponse>()
       .then((res) => {
         sliderItems.value = res.sliders
@@ -55,9 +57,15 @@ export default defineComponent({
         console.log(err)
         //
       })
+      .finally(() => {
+        isLoading.value = false
+        listTitle.value = '热门歌单推荐'
+      })
     return {
       sliderItems,
       albumItems,
+      isLoading,
+      listTitle,
     }
   },
 })
