@@ -1,7 +1,7 @@
 import { createApp, Directive } from 'vue'
 import Loading from './Loading.vue'
 
-const VLoading: Directive = {
+const loadingDirective: Directive = {
   beforeMount(el, binding) {},
   mounted(el, binding) {
     if (binding.value) {
@@ -33,4 +33,4 @@ const VLoading: Directive = {
   },
 }
 
-export default VLoading
+export default loadingDirective

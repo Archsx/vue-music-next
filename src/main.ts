@@ -5,7 +5,7 @@ import store from './store'
 import lazyPlugin from 'vue3-lazy'
 
 import '@/assets/scss/index.scss'
-import VLoading from './components/base/loading/directive'
+import loadingDirective from './components/base/loading/directive'
 
 createApp(App)
   .use(store)
@@ -13,5 +13,5 @@ createApp(App)
   .use(lazyPlugin, {
     loading: require('@/assets/svg/loading.svg'),
   })
-  .directive('loading', VLoading)
+  .directive('loading', loadingDirective)
   .mount('#app')

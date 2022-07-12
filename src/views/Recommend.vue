@@ -1,6 +1,6 @@
 <template>
   <div class="recommend" v-loading="isLoading">
-    <scroll class="recommend-content" v-if="!isLoading">
+    <scroll class="recommend-content" ref="scrollRef">
       <div>
         <div class="wrapper">
           <div class="slider__wrapper">
@@ -48,6 +48,9 @@ export default defineComponent({
     let albumItems: Ref<Array<IAlbumItem>> = ref([])
     const listTitle = ref('')
     const isLoading = ref(true)
+    //https://stackoverflow.com/questions/66907606/whats-vue-3-composition-apis-type-safe-way-of-defining-methods/66909582#66909582
+    const scrollRef = ref({} as InstanceType<typeof Scroll>)
+
     getRecommend<GetRecommendResponse>()
       .then((res) => {
         sliderItems.value = res.sliders
@@ -60,12 +63,14 @@ export default defineComponent({
       .finally(() => {
         isLoading.value = false
         listTitle.value = '热门歌单推荐'
+        scrollRef.value.refresh()
       })
     return {
       sliderItems,
       albumItems,
       isLoading,
       listTitle,
+      scrollRef,
     }
   },
 })

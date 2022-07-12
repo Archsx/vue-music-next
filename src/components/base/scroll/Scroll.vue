@@ -20,8 +20,12 @@ export default defineComponent({
   setup(props) {
     const wrapper: Ref<HTMLDivElement | null> = ref(null)
     const scrollInstance = useScroll(wrapper, props)
+    const refresh = () => {
+      scrollInstance.value?.refresh()
+    }
     return {
       wrapper,
+      refresh,
     }
   },
 })
